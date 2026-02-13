@@ -1,4 +1,7 @@
-################### NO TOCAR ESTE ARCHIVO ###################
+"""
+Módulo de procesamiento de datos de boyas.
+Contiene funciones para cargar, procesar y analizar datos de CSV de boyas.
+"""
 import os
 import pandas as pd
 import numpy as np
@@ -139,3 +142,54 @@ def guardar_excel(df, ruta_a_carpeta_de_guardado, nombre_de_excel_de_salida):
         os.makedirs(os.path.dirname(ruta_a_archivo))
     df.to_excel(ruta_a_archivo, index=False)
     print(f"Archivo guardado en: {ruta_a_archivo}")
+
+
+def procesar_datos_boyas(ruta_a_carpeta: str, fecha_inicial: str, fecha_final: str, 
+                         ruta_guardado: str, nombre_salida: str) -> pd.DataFrame:
+    """
+    Función orquestadora principal del procesamiento de datos de boyas.
+    
+    Args:
+        ruta_a_carpeta: Ruta donde están los archivos CSV descargados
+        fecha_inicial: Fecha inicial del rango (formato: "YYYY-MM-DD HH:MM:SS")
+        fecha_final: Fecha final del rango (formato: "YYYY-MM-DD HH:MM:SS")
+        ruta_guardado: Ruta donde guardar el archivo Excel de salida
+        nombre_salida: Nombre del archivo de salida (sin extensión)
+    
+    Returns:
+        DataFrame con los resultados del procesamiento
+    """
+    print("="*60)
+    print("INICIANDO PROCESAMIENTO DE DATOS DE BOYAS")
+    print("="*60)
+    
+    # 1. Buscar archivos CSV
+    print(f"\n1. Buscando archivos CSV en: {ruta_a_carpeta}")
+    archivos = buscar_archivos_csv(ruta_a_carpeta)
+    print(f"   ✓ Encontrados {len(archivos)} archivos CSV")
+    
+    # 2. Crear diccionario de boyas
+    print("\n2. Creando estructura de datos para boyas...")
+    dic = crear_diccionario_de_boyas(archivos)
+    print(f"   ✓ Boyas identificadas: {', '.join(dic.keys())}")
+    
+    # 3. Llenar datos del diccionario
+    print("\n3. Cargando y filtrando datos por fecha...")
+    print(f"   Rango: {fecha_inicial} → {fecha_final}")
+    dic = llenar_datos_de_diccionario_de_boyas(dic, ruta_a_carpeta, fecha_inicial, fecha_final)
+    print("   ✓ Datos cargados y filtrados")
+    
+    # 4. Crear DataFrame de salida
+    print("\n4. Generando reporte de datos esperados vs recibidos...")
+    df_salida = crear_dataframe_de_salida(dic, fecha_inicial, fecha_final)
+    print("   ✓ Reporte generado")
+    
+    # 5. Guardar Excel
+    print(f"\n5. Guardando archivo Excel: {nombre_salida}.xlsx")
+    guardar_excel(df_salida, ruta_guardado, nombre_salida)
+    
+    print("\n" + "="*60)
+    print("PROCESAMIENTO COMPLETADO EXITOSAMENTE")
+    print("="*60 + "\n")
+    
+    return df_salida

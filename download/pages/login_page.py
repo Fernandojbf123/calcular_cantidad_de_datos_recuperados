@@ -5,9 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class LoginPage:
     """
-        Página de Login usando Page Object Model.
+    Página de Login usando Page Object Model.
+    
+    Esta clase contiene SOLO métodos atómicos para interactuar con elementos.
+    La lógica de negocio está en download/services/login_service.py
     """
-
     
     # Localizadores de los elementos de la página
     USER_INPUT = (By.ID, "user")
@@ -31,24 +33,24 @@ class LoginPage:
         """Abre la página de login."""
         self.driver.get(self.base_url)
         
-    def set_username(self, username: str) -> None:
+    def set_username(self, username: str):
         """Escribe el nombre de usuario."""
         user_input_element = self.wait.until(EC.presence_of_element_located(self.USER_INPUT))
         user_input_element.clear()
         user_input_element.send_keys(username)
         
-    def set_password(self, password: str) -> None:
+    def set_password(self, password: str):
         """Escribe la contraseña."""
         password_input_element = self.wait.until(EC.presence_of_element_located(self.PASSWORD_INPUT))
         password_input_element.clear()
         password_input_element.send_keys(password)
         
-    def click_login_button(self) -> None:
+    def click_login_button(self):
         """Hace click en el botón de login."""
         login_button_element = self.wait.until(EC.element_to_be_clickable(self.LOGIN_BUTTON))
         login_button_element.click()
         
-    def login(self, username: str, password: str) -> None:
+    def iniciar_sesion(self, username: str, password: str):
         """
         Realiza el proceso de login completo.
         
@@ -59,5 +61,4 @@ class LoginPage:
         self.open()
         self.set_username(username)
         self.set_password(password)
-        self.click_login_button()
-        
+        self.click_login_button()   

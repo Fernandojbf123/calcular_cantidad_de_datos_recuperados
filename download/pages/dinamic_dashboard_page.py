@@ -5,8 +5,10 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class DinamicDashboardPage:
     """
-        Página de Dashboard Dinámico usando Page Object Model.
-        Esta clase se encargará de interactuar con la página de dashboard después del login.
+    Página de Dashboard Dinámico usando Page Object Model.
+    
+    Esta clase contiene SOLO métodos atómicos para interactuar con elementos.
+    La lógica de negocio está en download/services/dashboard_service.py
     """
     
     # Localizadores de los elementos
@@ -25,18 +27,9 @@ class DinamicDashboardPage:
     
     def wait_for_dashboard_load(self):
         """Espera a que el dashboard cargue completamente."""
-        # Esperar a que el botón FTP esté presente
         self.wait.until(EC.presence_of_element_located(self.BUTTON_TO_FTP))
     
-    def click_ftp_menu(self) -> None:
+    def click_ftp_menu(self):
         """Hace click en el botón del menú FTP."""
         ftp_button = self.wait.until(EC.element_to_be_clickable(self.BUTTON_TO_FTP))
         ftp_button.click()
-    
-    def navigate_to_ftp(self) -> None:
-        """
-        Navega al menú FTP desde el dashboard.
-        Espera a que el dashboard cargue y hace click en el menú FTP.
-        """
-        self.wait_for_dashboard_load()
-        self.click_ftp_menu()

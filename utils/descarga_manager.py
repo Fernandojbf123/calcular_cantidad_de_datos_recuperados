@@ -6,34 +6,31 @@ descarga automatizada de datos usando Selenium.
 """
 
 import os
-from dotenv import load_dotenv
-import config.descarga as descarga
-
-# Cargar variables de entorno desde .env
-load_dotenv()
-
+from config.config_manager import load_download_settings
 
 class DescargaManager:
     """
     Gestor de configuraciones para el módulo de descarga con Selenium.
-    Este archivo carga las configuraciones desde el archivo .env y desde config/descarga.
+    Este archivo carga las configuraciones desde el archivo .env y desde config/config_manager.
     Proporciona métodos para validar y mostrar la configuración actual.
     """
     
+    download_settings = load_download_settings()
+    
     # ============== CREDENCIALES (desde .env) ==============
-    URL = os.getenv("URL", "").strip('"')
-    USER_LOGIN = os.getenv("USER_LOGIN", "").strip('"')
-    USER_PASSWORD = os.getenv("USER_PASSWORD", "").strip('"')
+    URL = download_settings["base_url"]
+    USER_LOGIN = download_settings["user_login"]
+    USER_PASSWORD = download_settings["user_password"]
     
     # ============== CONFIGURACIONES DE SELENIUM ==============
-    NAVEGADOR = descarga.NAVEGADOR
-    HEADLESS_MODE = descarga.HEADLESS_MODE
-    IMPLICIT_WAIT = descarga.IMPLICIT_WAIT
+    NAVEGADOR = download_settings["navegador"]
+    HEADLESS_MODE = download_settings["headless_mode"]
+    IMPLICIT_WAIT = download_settings["implicit_wait"]
     
     # ============== CONFIGURACIONES DE DESCARGA ==============
-    CARPETA_DESCARGAS = descarga.CARPETA_DESCARGAS
-    TIMEOUT_DESCARGA = descarga.TIMEOUT_DESCARGA
-    MAX_REINTENTOS = descarga.MAX_REINTENTOS
+    CARPETA_DESCARGAS = download_settings["carpeta_descargas"]
+    TIMEOUT_DESCARGA = download_settings["timeout_descarga"]
+    MAX_REINTENTOS = download_settings["max_reintentos"]
     
     # ============== MÉTODOS DE VALIDACIÓN ==============
     @classmethod
@@ -52,7 +49,6 @@ class DescargaManager:
         """Crea las carpetas necesarias para descarga si no existen."""
         if cls.CARPETA_DESCARGAS and not os.path.exists(cls.CARPETA_DESCARGAS):
             os.makedirs(cls.CARPETA_DESCARGAS)
-            print(f"✓ Carpeta creada: {cls.CARPETA_DESCARGAS}")
     
     @classmethod
     def mostrar_configuracion(cls):

@@ -55,8 +55,7 @@ class DriverManager:
         # Maximizar ventana (opcional)
         if not self.headless:
             self.driver.maximize_window()
-        
-        print(f"✓ Driver {self.navegador} creado exitosamente")
+            
         return self.driver
     
     def _crear_chrome_driver(self):

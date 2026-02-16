@@ -1,6 +1,6 @@
 
 from utils.descarga_manager import descarga_config
-from utils.driver_manager import DriverManager
+from download.drivers.driver_manager import DriverManager
 from pages.login_page import LoginPage
 from pages.dinamic_dashboard_page import DinamicDashboardPage
 from pages.download_page import DownloadPage

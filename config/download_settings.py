@@ -4,7 +4,6 @@ Configuraciones del módulo de DESCARGA con Selenium.
 Este archivo contiene solo las configuraciones relacionadas con la 
 descarga automatizada de datos usando Selenium.
 """
-
 # ============== CONFIGURACIONES DE SELENIUM ==============
 # Navegador a utilizar: "chrome", "firefox", "edge"
 NAVEGADOR = "chrome"
@@ -24,3 +23,4 @@ TIMEOUT_DESCARGA = 60
 
 # Intentos de reintento en caso de error
 MAX_REINTENTOS = 3
+

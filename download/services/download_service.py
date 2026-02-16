@@ -78,10 +78,9 @@ def _download_altura_ola_file(download_page, files_in_folder):
     
     # LÓGICA DE NEGOCIO: Buscar archivo específico "AlturaOlaSignificante"
     for link in download_links:
-        link_text = download_page.get_download_link_text(link)
         
-        current_file = link_text.replace(' ',"_")
-        #datos_AlturaOlaSignificante_BMT3-09-T80_TOTAL
+        link_text = download_page.get_download_link_text(link)
+        current_file = link_text.replace(' ',"_").replace('.csv',"_TOTAL.csv")
         
         # Criterio de negocio: buscar AlturaOlaSignificante
         # Eliminar archivo existente antes de descargar
@@ -92,8 +91,8 @@ def _download_altura_ola_file(download_page, files_in_folder):
             download_page.click_download_link(link)
             # Esperar a que inicie la descarga
             time.sleep(2)
-            msg = "Descargando archivo de AlturaOlaSignificante..."
-            return msg
+            msg = f"Descargando archivo {current_file}"
+            print(msg)
     
     return msg
 
@@ -109,7 +108,7 @@ def _remove_existing_file(file,files_in_folder=None):
         # Extraer el nombre del archivo del texto del enlace
         if file.lower() in files_in_folder:
         # Construir la ruta completa del archivo
-            filename = "datos_" +file.split("Datos_")[-1].strip().replace('.csv',"_TOTAL.csv")
+            filename = "datos_" + file.split("Datos_")[-1].strip()
             # Obtener la carpeta de descargas
             download_folder = descarga_config.CARPETA_DESCARGAS
             file_path = os.path.join(download_folder, filename)

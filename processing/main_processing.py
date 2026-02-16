@@ -13,7 +13,6 @@ def main():
     Este script es completamente independiente del módulo de descarga.
     Procesa archivos CSV ya existentes y genera reportes Excel.
     """
-    ############## NO TOCAR ##############
     run_processing()
 
 

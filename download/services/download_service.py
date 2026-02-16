@@ -1,12 +1,11 @@
 """
 Servicio de descargas - Lógica de negocio para descargar archivos.
 """
-
-from download.pages.download_page import DownloadPage
-from utils.descarga_manager import descarga_config
-import time
 import os
-import glob
+import time
+from download.pages.download_page import DownloadPage
+from config.settings_manager import descarga_config
+
 
 
 def download_bmt_bot_altura_ola_data(driver):

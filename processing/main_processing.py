@@ -1,9 +1,11 @@
+import sys
+from pathlib import Path
 
+# Agregar la raíz del proyecto al path para que los imports funcionen
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
 
-from utils.procesador import buscar_archivos_csv, crear_dataframe_de_salida, procesar_datos_boyas
-from utils import procesamiento_config
-from utils.procesamiento_manager import *
-
+from processing.orquestador import run_processing
 
 def main():
     """
@@ -12,9 +14,8 @@ def main():
     Procesa archivos CSV ya existentes y genera reportes Excel.
     """
     ############## NO TOCAR ##############
-    procesar_datos_boyas(ruta_a_carpeta: , fecha_inicial: , fecha_final:, 
-                         ruta_guardado, nombre_salida:)
+    run_processing()
 
 
 if __name__ == "__main__":
-    main()
+    run_processing()

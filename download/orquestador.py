@@ -5,14 +5,12 @@ Orquestador del módulo de descarga.
 Este archivo coordina el flujo del proceso de descarga llamando a los servicios.
 No contiene lógica de negocio, solo orquesta la ejecución.
 """
-
-from utils.descarga_manager import descarga_config
+import time
+from config.settings_manager import descarga_config
 from download.drivers.driver_manager import DriverManager
 from download.services import login_service
 from download.services import dinamic_dashboard_service
 from download.services import download_service
-import time
-
 
 def run_download():
     """

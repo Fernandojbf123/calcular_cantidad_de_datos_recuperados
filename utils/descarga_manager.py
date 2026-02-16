@@ -7,19 +7,23 @@ descarga automatizada de datos usando Selenium.
 
 import os
 from dotenv import load_dotenv
-from config import descarga
+import config.descarga as descarga
 
 # Cargar variables de entorno desde .env
 load_dotenv()
 
 
 class DescargaManager:
-    """Gestor de configuraciones para el módulo de descarga con Selenium."""
+    """
+    Gestor de configuraciones para el módulo de descarga con Selenium.
+    Este archivo carga las configuraciones desde el archivo .env y desde config/descarga.
+    Proporciona métodos para validar y mostrar la configuración actual.
+    """
     
     # ============== CREDENCIALES (desde .env) ==============
-    WEB_URL = os.getenv("WEB_URL", "")
-    USER_LOGIN = os.getenv("USER_LOGIN", "")
-    USER_PASSWORD = os.getenv("USER_PASSWORD", "")
+    URL = os.getenv("URL", "").strip('"')
+    USER_LOGIN = os.getenv("USER_LOGIN", "").strip('"')
+    USER_PASSWORD = os.getenv("USER_PASSWORD", "").strip('"')
     
     # ============== CONFIGURACIONES DE SELENIUM ==============
     NAVEGADOR = descarga.NAVEGADOR
@@ -38,8 +42,8 @@ class DescargaManager:
         if not cls.USER_LOGIN or not cls.USER_PASSWORD:
             print("⚠️  Advertencia: Credenciales no configuradas en .env")
             return False
-        if not cls.WEB_URL:
-            print("⚠️  Advertencia: WEB_URL no configurada en .env")
+        if not cls.URL:
+            print("⚠️  Advertencia: URL no configurada en .env")
             return False
         return True
     
@@ -56,9 +60,9 @@ class DescargaManager:
         print("\n" + "="*60)
         print("CONFIGURACIÓN - MÓDULO DE DESCARGA")
         print("="*60)
-        print(f"URL Web:              {cls.WEB_URL if cls.WEB_URL else 'No configurada'}")
-        print(f"Usuario:              {'***' if cls.USER_LOGIN else 'No configurado'}")
-        print(f"Password:             {'***' if cls.USER_PASSWORD else 'No configurado'}")
+        print(f"URL Web:              {cls.URL if cls.URL else 'No configurada'}")
+        print(f"Usuario:              {cls.USER_LOGIN if cls.USER_LOGIN else 'No configurado'}")
+        print(f"Password:             {'*' * len(cls.USER_PASSWORD) if cls.USER_PASSWORD else 'No configurado'}")
         print(f"Navegador:            {cls.NAVEGADOR}")
         print(f"Modo headless:        {cls.HEADLESS_MODE}")
         print(f"Implicit wait:        {cls.IMPLICIT_WAIT}s")

@@ -1,5 +1,4 @@
-from services.procesador import *
-
+from processing.services.procesador import *
 from config.settings_manager import process_config
 
 def run_processing():

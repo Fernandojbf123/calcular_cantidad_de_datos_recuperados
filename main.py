@@ -1,5 +1,12 @@
-import download.main_download
-import processing.main_processing
+import sys
+from pathlib import Path
+
+# Agregar la raíz del proyecto al path para que los imports funcionen
+project_root = Path(__file__).parent
+sys.path.insert(0, str(project_root))
+
+import download.orquestador as download
+import processing.orquestador as processing
 
 def main():
     """
@@ -14,10 +21,13 @@ def main():
     
     # Ejecutar módulo de descarga
     print("\n🔹 EJECUTANDO MÓDULO DE DESCARGA")
-    download.main_download.main()
+    download.run_download()
     
     # Ejecutar módulo de procesamiento
     print("\n🔹 EJECUTANDO MÓDULO DE PROCESAMIENTO")
-    processing.main_processing.main()
+    processing.run_processing()
     
     print("\n✅ PROCESO COMPLETO FINALIZADO")
+    
+if __name__ == "__main__":
+    main()
